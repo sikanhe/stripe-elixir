@@ -1,0 +1,2 @@
+defmodule Stripex do
+end
