@@ -1,4 +1,3 @@
 use Mix.Config
 
-#
-#     import_config "#{Mix.env}.exs"
+config :stripex, :secret_key, "sk_test_STE7ERqNFdke9EIA5Nj72m3t"
