@@ -1,5 +1,5 @@
-defmodule Stripex.Balance do
-  use Stripex.API, [:list]
+defmodule Stripe.Balance do
+  use Stripe.API, [:list]
 
   def endpoint do
     "balance"

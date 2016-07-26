@@ -1,5 +1,5 @@
-defmodule Stripex.Recipient do
-  use Stripex.API, [:create, :retrieve, :update, :delete, :list]
+defmodule Stripe.Recipient do
+  use Stripe.API, [:create, :retrieve, :update, :delete, :list]
 
   def endpoint do
     "recipients"

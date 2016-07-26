@@ -1,7 +1,7 @@
-defmodule Stripex.TokenTest do
+defmodule Stripe.TokenTest do
   use ExUnit.Case, async: true
 
-  alias Stripex.Token
+  alias Stripe.Token
 
   test "create a token" do
     assert {:ok, token} = Token.create(

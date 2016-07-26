@@ -1,5 +1,5 @@
-defmodule Stripex.Charge do
-  use Stripex.API, [:list, :retrieve, :create, :update]
+defmodule Stripe.Charge do
+  use Stripe.API, [:list, :retrieve, :create, :update]
 
   def endpoint do
     "charges"
@@ -10,6 +10,6 @@ defmodule Stripex.Charge do
   end
 
   def capture(id) do
-    Stripex.request(:post, capture_endpoint(id))
+    Stripe.request(:post, capture_endpoint(id))
   end
 end

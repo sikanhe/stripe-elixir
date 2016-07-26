@@ -1,7 +1,7 @@
-defmodule Stripex.EventTest do
+defmodule Stripe.EventTest do
   use ExUnit.Case, async: true
 
-  alias Stripex.Event
+  alias Stripe.Event
 
   test "retrieve an event" do
     assert {:ok, %{"error" => %{"message" => "No such event: not exist"}}}

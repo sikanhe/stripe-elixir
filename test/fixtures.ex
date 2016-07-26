@@ -1,4 +1,4 @@
-defmodule Stripex.Fixtures do
+defmodule Stripe.Fixtures do
   def customer do
 
   end

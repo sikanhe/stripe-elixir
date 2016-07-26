@@ -1,7 +1,7 @@
-defmodule Stripex.BalanceTest do
+defmodule Stripe.BalanceTest do
   use ExUnit.Case, async: true
 
-  alias Stripex.Balance
+  alias Stripe.Balance
 
   test "retrieve balance" do
     assert {:ok, %{"object" => "balance"}} = Balance.retrieve()

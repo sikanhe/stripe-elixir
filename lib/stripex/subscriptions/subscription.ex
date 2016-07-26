@@ -1,5 +1,5 @@
-defmodule Stripex.Subscription do
-  use Stripex.API, [:create, :retrieve, :update, :delete, :list]
+defmodule Stripe.Subscription do
+  use Stripe.API, [:create, :retrieve, :update, :delete, :list]
 
   def endpoint do
     "subscriptions"
@@ -10,6 +10,6 @@ defmodule Stripex.Subscription do
   end
 
   def delete_discount(subscription_id) do
-    Stripex.request(:delete, "#{endpoint}/#{subscription_id}/discount")
+    Stripe.request(:delete, "#{endpoint}/#{subscription_id}/discount")
   end
 end

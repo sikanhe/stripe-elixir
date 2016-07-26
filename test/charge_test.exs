@@ -1,7 +1,7 @@
-defmodule Stripex.ChargeTest do
+defmodule Stripe.ChargeTest do
   use ExUnit.Case, async: true
 
-  alias Stripex.Charge
+  alias Stripe.Charge
 
   test "create a charge" do
     assert {:ok, %{"error" => %{"message" => "Must provide source or customer."}}}

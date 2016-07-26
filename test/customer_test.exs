@@ -1,7 +1,7 @@
-defmodule Stripex.CustomerTest do
+defmodule Stripe.CustomerTest do
   use ExUnit.Case, async: true
 
-  alias Stripex.{Customer, Token}
+  alias Stripe.{Customer, Token}
 
   test "create, retrieve and delete a customer" do
     assert {:ok, customer} = Customer.create([])

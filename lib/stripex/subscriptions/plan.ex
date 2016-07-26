@@ -1,5 +1,5 @@
-defmodule Stripex.Plan do
-  use Stripex.API, [:create, :retrieve, :update, :delete, :list]
+defmodule Stripe.Plan do
+  use Stripe.API, [:create, :retrieve, :update, :delete, :list]
 
   def endpoint do
     "plans"

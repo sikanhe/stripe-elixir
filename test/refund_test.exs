@@ -1,7 +1,7 @@
-defmodule Stripex.RefundTest do
+defmodule Stripe.RefundTest do
   use ExUnit.Case, async: true
 
-  alias Stripex.{Token, Charge, Refund}
+  alias Stripe.{Token, Charge, Refund}
 
   test "create/update a refund" do
     {:ok, token} = Token.create(

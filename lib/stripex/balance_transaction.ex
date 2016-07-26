@@ -1,5 +1,5 @@
-defmodule Stripex.BalanceTransaction do
-  use Stripex.API, [:retrieve, :list]
+defmodule Stripe.BalanceTransaction do
+  use Stripe.API, [:retrieve, :list]
 
   def endpoint do
     "balance/history"

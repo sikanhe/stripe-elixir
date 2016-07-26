@@ -1,5 +1,5 @@
-defmodule Stripex.Token do
-  use Stripex.API, [:create, :retrieve]
+defmodule Stripe.Token do
+  use Stripe.API, [:create, :retrieve]
 
   def endpoint do
     "tokens"

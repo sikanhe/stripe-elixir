@@ -1,5 +1,5 @@
-defmodule Stripex.CountrySpec do
-  use Stripex.API, [:retrieve, :list]
+defmodule Stripe.CountrySpec do
+  use Stripe.API, [:retrieve, :list]
 
   def endpoint do
     "country_specs"

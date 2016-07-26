@@ -1,12 +1,12 @@
-defmodule Stripex do
+defmodule Stripe do
   @api "https://api.stripe.com/v1/"
 
   defmodule MissingSecretKeyError do
     defexception message: """
-      The secret_key settings is required to use stripex. Please include your
+      The secret_key settings is required to use stripe. Please include your
       strip api key in your application config file like so:
 
-        config :stripex, secret_key: YOUR_SECRET_KEY
+        config :stripe, secret_key: YOUR_SECRET_KEY
 
       Alternatively, you can also set the secret key as an environment variable:
 
@@ -15,7 +15,7 @@ defmodule Stripex do
   end
 
   def get_stripe_key do
-    Application.get_env(:stripex, :secret_key, System.get_env("STRIPE_SECRET_KEY"))
+    Application.get_env(:stripe, :secret_key, System.get_env("STRIPE_SECRET_KEY"))
     || raise MissingSecretKeyError
   end
 
@@ -25,7 +25,7 @@ defmodule Stripex do
 
   def request_url(endpoint, data) do
     base_url = request_url(endpoint)
-    query_params = Stripex.Utils.encode_data(data)
+    query_params = Stripe.Utils.encode_data(data)
 
     "#{base_url}?#{query_params}"
   end
@@ -35,7 +35,7 @@ defmodule Stripex do
     bearer_token = get_stripe_key()
 
     [{"Authorization", "Bearer #{bearer_token}"},
-     {"User-Agent", "Stripe/v1 stripex/#{app_version}"},
+     {"User-Agent", "Stripe/v1 stripe/#{app_version}"},
      {"Content-Type", "application/x-www-form-urlencoded"}]
   end
 

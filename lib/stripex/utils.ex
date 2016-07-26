@@ -1,6 +1,6 @@
-defmodule Stripex.Utils do
+defmodule Stripe.Utils do
   @moduledoc """
-  Utility functions for stripex
+  Utility functions for stripe
   """
 
   @doc """
