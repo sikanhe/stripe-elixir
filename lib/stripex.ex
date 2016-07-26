@@ -35,7 +35,7 @@ defmodule Stripe do
     bearer_token = get_stripe_key()
 
     [{"Authorization", "Bearer #{bearer_token}"},
-     {"User-Agent", "Stripe/v1 stripe/#{app_version}"},
+     {"User-Agent", "Stripe/v1 stripe-elixir/#{app_version}"},
      {"Content-Type", "application/x-www-form-urlencoded"}]
   end
 
