@@ -3,17 +3,18 @@ defmodule Stripe.PlanTest do
   alias Stripe.Plan
 
   test "create/update/delete a plan" do
-    assert {:ok, plan} = Plan.create(name: "basic",
-                                     id: "basic",
+    Plan.delete("plan_test")
+    assert {:ok, plan} = Plan.create(name: "plan_test",
+                                     id: "plan_test",
                                      amount: 1,
                                      currency: "usd",
                                      interval: "month")
 
-    assert {:ok, ^plan} = Plan.retrieve(plan["id"])
-    assert {:ok, %{"name" => "premium"}} = Plan.update(plan["id"], name: "premium")
-    assert {:ok, %{"deleted" => true}} = Plan.delete(plan["id"])
-    assert {:ok, %{"error" => %{"message" => "No such plan: basic"}}} =
-      Plan.retrieve(plan["id"])
+    assert {:ok, ^plan} = Plan.retrieve("plan_test")
+    assert {:ok, %{"name" => "premium"}} = Plan.update("plan_test", name: "premium")
+    assert {:ok, %{"deleted" => true}} = Plan.delete("plan_test")
+    assert {:ok, %{"error" => %{"message" => "No such plan: plan_test"}}} =
+      Plan.retrieve("plan_test")
   end
 
   test "list all plans" do

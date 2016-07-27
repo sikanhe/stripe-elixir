@@ -1,5 +1,5 @@
 defmodule StripeTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest Stripe
 
   test "the truth" do
