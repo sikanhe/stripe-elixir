@@ -1,6 +1,6 @@
 # Stripe
 
-**TODO: Add description**
+Stripe API client for Elixir. Everything except for Relay features are complete and tested.
 
 ## Installation
 
@@ -21,4 +21,3 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
       [applications: [:stripe]]
     end
     ```
-
