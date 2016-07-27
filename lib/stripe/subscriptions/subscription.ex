@@ -5,10 +5,6 @@ defmodule Stripe.Subscription do
     "subscriptions"
   end
 
-  def cancel(id) do
-    delete(id)
-  end
-
   def delete_discount(subscription_id) do
     Stripe.request(:delete, "#{endpoint}/#{subscription_id}/discount")
   end
