@@ -3,10 +3,18 @@ defmodule Stripe.CustomerTest do
 
   alias Stripe.{Customer, Token}
 
-  test "create, retrieve and delete a customer" do
+  setup do
     assert {:ok, customer} = Customer.create([])
+
+    {:ok, customer: customer}
+  end
+
+  test "create a customer", %{customer: customer} do
+    assert %{"id" => _} = customer
+  end
+
+  test "retrieve a customer", %{customer: customer} do
     assert {:ok, ^customer} = Customer.retrieve(customer["id"])
-    assert {:ok, %{"deleted" => true}} = Customer.delete(customer["id"])
   end
 
   test "list all customers" do
@@ -14,9 +22,7 @@ defmodule Stripe.CustomerTest do
       = Customer.list
   end
 
-  test "add/delete a card to a customer" do
-    {:ok, customer} = Customer.create([])
-
+  test "add/delete a card to a customer", %{customer: customer} do
     {:ok, card} = Token.create(
       card: [
         number: "4242424242424242",
@@ -34,5 +40,14 @@ defmodule Stripe.CustomerTest do
 
     assert {:ok, %{"sources" => %{"data" => []}}} =
       Customer.retrieve(customer["id"])
+  end
+
+  test "remove discount from customer", %{customer: customer} do
+    assert {:ok, %{"error" => %{"message" => "No active discount" <> _}}} =
+      Customer.delete_discount(customer["id"])
+  end
+
+  test "delete a customer", %{customer: customer} do
+    assert {:ok, %{"deleted" => true}} = Customer.delete(customer["id"])
   end
 end

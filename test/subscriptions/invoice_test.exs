@@ -1,26 +1,46 @@
 defmodule Stripe.InvoiceTest do
   use ExUnit.Case, async: true
-  alias Stripe.{Customer, Invoice}
+  alias Stripe.{Customer, Token, Invoice, InvoiceItem}
 
-  test "create an invoice" do
+  setup_all do
     {:ok, customer} = Customer.create([])
-    assert {:ok, %{"error" => %{"message" => "Nothing to invoice for customer"}}} =
-      Invoice.create(customer: customer["id"])
+
+    {:ok, card} = Token.create(
+      card: [
+        number: "4242424242424242",
+        exp_month: 7,
+        exp_year: 2017,
+        cvc: "111"
+      ]
+    )
+
+    Customer.create_card(customer["id"], card["id"])
+
+    {:ok, invoice_item} = InvoiceItem.create(customer: customer["id"],
+                                             amount: 100,
+                                             currency: "usd",
+                                             description: "invoice test")
+
+    {:ok, invoice} = Invoice.create(customer: customer["id"])
+
+    {:ok, invoice: invoice, customer: customer}
+  end
+
+  test "create an invoice", %{invoice: invoice} do
+    assert %{"amount_due" => _} = invoice
   end
   #
-  test "update/pay an invoice" do
-    assert {:ok, %{"error" => %{"message" => "No such invoice: invoice_test"}}} =
-      Invoice.retrieve("invoice_test")
+  test "retrive an invoice", %{invoice: %{"id" => invoice_id}} do
+    assert {:ok, %{"id" => ^invoice_id}} = Invoice.retrieve(invoice_id)
   end
 
-  test "update and invoice" do
-    assert {:ok, %{"error" => %{"message" => "No such invoice: invoice_test"}}} =
-      Invoice.update("invoice_test", metadata: [key: "value"])
+  test "update an invoice", %{invoice: invoice} do
+    assert {:ok, %{"metadata" => %{"key" => "value"}}} =
+      Invoice.update(invoice["id"], metadata: [key: "value"])
   end
 
-  test "pay an invoice" do
-    assert {:ok, %{"error" => %{"message" => "No such invoice: invoice_test"}}} =
-      Invoice.pay("invoice_test")
+  test "pay an invoice", %{invoice: invoice} do
+    assert {:ok, %{"paid" => true}} = Invoice.pay(invoice["id"])
   end
 
   test "list all invoices" do

@@ -2,7 +2,7 @@ defmodule Stripe.SubscriptionTest do
   use ExUnit.Case, async: true
   alias Stripe.{Subscription, Plan, Customer, Token}
 
-  test "create/update/delete a subscription" do
+  setup do
     {:ok, customer} = Customer.create([])
 
     {:ok, card} = Token.create(
@@ -14,8 +14,7 @@ defmodule Stripe.SubscriptionTest do
       ]
     )
 
-    assert {:ok, %{"sources" => %{"data" => [card]}}} =
-      Customer.create_card(customer["id"], card["id"])
+    Customer.create_card(customer["id"], card["id"])
 
     Plan.delete("sub_test_plan")
     {:ok, plan} = Plan.create(name: "sub_test_plan",
@@ -24,9 +23,22 @@ defmodule Stripe.SubscriptionTest do
                               currency: "usd",
                               interval: "month")
 
-    assert {:ok, subscription} = Subscription.create(customer: customer["id"],
+    {:ok, subscription} = Subscription.create(customer: customer["id"],
                                               plan: plan["id"])
 
+    on_exit fn ->
+      Plan.delete("sub_test_plan")
+    end
+
+    {:ok, subscription: subscription}
+  end
+
+  test "delete discount for a subscription", %{subscription: subscription} do
+    assert {:ok, %{"error" => %{"message" => "No active discount for subscription" <> _}}} =
+      Subscription.delete_discount(subscription["id"])
+  end
+
+  test "create/update/delete a subscription", %{subscription: subscription} do
     assert {:ok, ^subscription} = Subscription.retrieve(subscription["id"])
 
     assert {:ok, %{"metadata" => %{"key" => "value"}}} =
