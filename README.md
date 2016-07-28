@@ -11,7 +11,7 @@ Stripe API client for Elixir. [Documentation](https://hexdocs.pm/stripe_elixir/a
 
     ```elixir
     def deps do
-      [{:stripe, "~> 0.1.0"}]
+      [{:stripe, "~> 0.1.0", hex: :stripe_elixir}]
     end
     ```
 
