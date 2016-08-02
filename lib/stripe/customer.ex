@@ -17,6 +17,10 @@ defmodule Stripe.Customer do
     Stripe.request(:get, "#{endpoint}/#{customer_id}/sources/#{source_id}")
   end
 
+  def update_source(customer_id, source_id, updates) do
+    Stripe.request(:post, "#{endpoint}/#{customer_id}/sources/#{source_id}", updates)
+  end
+
   def create_source(customer_id, source: token) do
     Stripe.request(:post, "#{endpoint}/#{customer_id}", [source: token])
   end
@@ -31,6 +35,10 @@ defmodule Stripe.Customer do
     create_source(customer_id, source: card_id)
   end
 
+  def update_card(customer_id, card_id, updates) do
+    update_source(customer_id, card_id, updates)
+  end
+
   def delete_card(customer_id, card_id) do
     delete_source(customer_id, source: card_id)
   end
@@ -39,6 +47,10 @@ defmodule Stripe.Customer do
 
   def create_bank_account(customer_id, bank_acct_id) do
     create_source(customer_id, source: bank_acct_id)
+  end
+
+  def update_bank_account(customer_id, bank_acct_id, updates) do
+    update_source(customer_id, bank_acct_id, updates)
   end
 
   def delete_bank_account(customer_id, bank_acct_id) do
