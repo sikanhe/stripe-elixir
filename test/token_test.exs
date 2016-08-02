@@ -2,6 +2,7 @@ defmodule Stripe.TokenTest do
   use ExUnit.Case, async: true
 
   alias Stripe.Token
+  alias Stripe.{InvalidRequestError, CardError}
 
   test "create a token" do
     assert {:ok, token} = Token.create(
@@ -16,8 +17,19 @@ defmodule Stripe.TokenTest do
     assert {:ok, ^token} = Token.retrieve(token["id"])
   end
 
+  test "card error" do
+    assert {:error, %CardError{param: "number", code: "incorrect_number"}} = Token.create(
+      card: [
+        number: "invalid card number",
+        exp_month: 7,
+        exp_year: 2017,
+        cvc: "314"
+      ]
+    )
+  end
+
   test "retrieve a token" do
-    assert {:ok, %{"error" => %{"message" => "No such token: not exist"}}}
+    assert {:error, %InvalidRequestError{message: "No such token: not exist"}}
       = Token.retrieve("not exist")
   end
 end

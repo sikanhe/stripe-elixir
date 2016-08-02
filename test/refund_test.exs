@@ -2,6 +2,7 @@ defmodule Stripe.RefundTest do
   use ExUnit.Case, async: true
 
   alias Stripe.{Token, Charge, Refund}
+  alias Stripe.InvalidRequestError
 
   test "create/update a refund" do
     {:ok, token} = Token.create(
@@ -20,7 +21,7 @@ defmodule Stripe.RefundTest do
   end
 
   test "retrieve a refund" do
-    assert {:ok, %{"error" => %{"message" => "No such refund: not exist"}}}
+    assert {:error, %InvalidRequestError{message: "No such refund: not exist"}}
       = Refund.retrieve("not exist")
   end
 

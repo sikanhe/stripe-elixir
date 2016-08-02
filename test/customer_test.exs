@@ -2,6 +2,7 @@ defmodule Stripe.CustomerTest do
   use ExUnit.Case, async: true
 
   alias Stripe.{Customer, Token}
+  alias Stripe.InvalidRequestError
 
   setup do
     assert {:ok, customer} = Customer.create([])
@@ -43,7 +44,7 @@ defmodule Stripe.CustomerTest do
   end
 
   test "remove discount from customer", %{customer: customer} do
-    assert {:ok, %{"error" => %{"message" => "No active discount" <> _}}} =
+    assert {:error, %InvalidRequestError{message: "No active discount" <> _}} =
       Customer.delete_discount(customer["id"])
   end
 

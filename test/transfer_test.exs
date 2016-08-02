@@ -1,20 +1,21 @@
 defmodule Stripe.TransferTest do
   use ExUnit.Case, async: true
   alias Stripe.Transfer
+  alias Stripe.InvalidRequestError
 
   test "create a transfer" do
-    assert {:ok, %{"error" => %{"param" => "destination"}}} = Transfer.create(amount: 100,
+    assert {:error, %InvalidRequestError{param: "destination"}} = Transfer.create(amount: 100,
                                              currency: "usd",
                                              destination: "transfer_test")
   end
 
   test "retrieve a transfer" do
-    assert {:ok, %{"error" => %{"message" => "No such transfer: test"}}} =
+    assert {:error, %InvalidRequestError{message: "No such transfer: test"}} =
       Transfer.retrieve("test")
   end
 
   test "update a transfer" do
-    assert {:ok, %{"error" => %{"message" => "No such transfer: test"}}} =
+    assert {:error, %InvalidRequestError{message: "No such transfer: test"}} =
       Transfer.update("test", metadata: [key: "value"])
   end
 

@@ -1,6 +1,7 @@
 defmodule Stripe.SubscriptionTest do
   use ExUnit.Case, async: true
   alias Stripe.{Subscription, Plan, Customer, Token}
+  alias Stripe.InvalidRequestError
 
   setup do
     {:ok, customer} = Customer.create([])
@@ -34,7 +35,7 @@ defmodule Stripe.SubscriptionTest do
   end
 
   test "delete discount for a subscription", %{subscription: subscription} do
-    assert {:ok, %{"error" => %{"message" => "No active discount for subscription" <> _}}} =
+    assert {:error, %InvalidRequestError{message: "No active discount for subscription" <> _}} =
       Subscription.delete_discount(subscription["id"])
   end
 

@@ -1,6 +1,7 @@
 defmodule Stripe.PlanTest do
   use ExUnit.Case, async: true
   alias Stripe.Plan
+  alias Stripe.InvalidRequestError
 
   test "create/update/delete a plan" do
     Plan.delete("plan_test")
@@ -13,7 +14,7 @@ defmodule Stripe.PlanTest do
     assert {:ok, ^plan} = Plan.retrieve("plan_test")
     assert {:ok, %{"name" => "premium"}} = Plan.update("plan_test", name: "premium")
     assert {:ok, %{"deleted" => true}} = Plan.delete("plan_test")
-    assert {:ok, %{"error" => %{"message" => "No such plan: plan_test"}}} =
+    assert {:error, %InvalidRequestError{message: "No such plan: plan_test"}} =
       Plan.retrieve("plan_test")
   end
 

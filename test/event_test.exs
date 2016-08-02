@@ -2,9 +2,10 @@ defmodule Stripe.EventTest do
   use ExUnit.Case, async: true
 
   alias Stripe.Event
+  alias Stripe.InvalidRequestError
 
   test "retrieve an event" do
-    assert {:ok, %{"error" => %{"message" => "No such event: not exist"}}}
+    assert {:error, %InvalidRequestError{message: "No such event: not exist"}}
       = Event.retrieve("not exist")
   end
 

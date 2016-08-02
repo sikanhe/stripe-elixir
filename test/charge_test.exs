@@ -2,14 +2,15 @@ defmodule Stripe.ChargeTest do
   use ExUnit.Case, async: true
 
   alias Stripe.Charge
+  alias Stripe.InvalidRequestError
 
   test "create a charge" do
-    assert {:ok, %{"error" => %{"message" => "Must provide source or customer."}}}
+    assert {:error, %InvalidRequestError{message: "Must provide source or customer."}}
       = Charge.create([])
   end
 
   test "retrieve a charge" do
-    assert {:ok, %{"error" => %{"message" => "No such charge: not exist"}}}
+    assert {:error, %InvalidRequestError{message: "No such charge: not exist"}}
       = Charge.retrieve("not exist")
   end
 
