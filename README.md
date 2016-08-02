@@ -1,4 +1,4 @@
-# Stripe
+# Stripe [![Build Status](https://travis-ci.org/sikanhe/stripe-elixir.svg?branch=master)](https://travis-ci.org/sikanhe/stripe-elixir/) #
 
 Stripe API client for Elixir. [Documentation](https://hexdocs.pm/stripe_elixir/api-reference.html)
 - Everything except for Relay features are complete and tested.
