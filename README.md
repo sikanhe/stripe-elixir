@@ -46,4 +46,5 @@ This lib closely follows the official Ruby Client API.
 
 Returns {:ok, RESPONSE_BODY} when the request is successful.
 
-{:error, _} tuples are only returned when there is a network error
+{:error, %ERROR_STRUCT{}} tuples are returned when there is a request/api error
+See all error types at https://stripe.com/docs/api/ruby#errors
