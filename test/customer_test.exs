@@ -18,6 +18,11 @@ defmodule Stripe.CustomerTest do
     assert {:ok, ^customer} = Customer.retrieve(customer["id"])
   end
 
+  test "update a customer", %{customer: customer} do
+    assert {:ok, %{"email" => "hello@gmail.com"}} =
+      Customer.update(customer["id"], email: "hello@gmail.com")
+  end
+
   test "list all customers" do
     assert {:ok, %{"object" => "list", "url" => "/v1/customers"}}
       = Customer.list
