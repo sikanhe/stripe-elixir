@@ -9,7 +9,7 @@ defmodule Stripe.Charge do
     "#{endpoint}/#{id}/capture"
   end
 
-  def capture(id) do
-    Stripe.request(:post, capture_endpoint(id))
+  def capture(id, params \\ []) do
+    Stripe.request(:post, capture_endpoint(id), params)
   end
 end
