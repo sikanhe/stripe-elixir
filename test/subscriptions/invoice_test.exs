@@ -16,7 +16,7 @@ defmodule Stripe.InvoiceTest do
 
     Customer.create_card(customer["id"], card["id"])
 
-    {:ok, invoice_item} = InvoiceItem.create(customer: customer["id"],
+    {:ok, _invoice_item} = InvoiceItem.create(customer: customer["id"],
                                              amount: 100,
                                              currency: "usd",
                                              description: "invoice test")
@@ -45,5 +45,10 @@ defmodule Stripe.InvoiceTest do
 
   test "list all invoices" do
     assert {:ok, %{"object" => "list", "url" => "/v1/invoices"}} = Invoice.list
+  end
+
+  test "retrieve upcoming invoices for a customer", %{customer: %{"id" => cus_id}} do
+    assert {:error, %Stripe.InvalidRequestError{message: "No upcoming invoices for customer: " <> ^cus_id}} =
+      Invoice.upcoming(customer: cus_id)
   end
 end
