@@ -13,12 +13,8 @@ defmodule Stripe.Invoice do
     Stripe.request(:post, "#{endpoint}/#{invoice_id}/lines")
   end
 
-  def upcoming do
-    Stripe.request(:get, "#{endpoint}/upcoming")
-  end
-
-  def upcoming(customer: customer_id) do
-    Stripe.request(:get, "#{endpoint}/upcoming?customer=#{customer_id}")
+  def upcoming(opts) do
+    Stripe.request(:get, "#{endpoint}/upcoming", opts)
   end
 
   def pay(invoice_id) do
