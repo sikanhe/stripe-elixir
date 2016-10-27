@@ -45,7 +45,8 @@ defmodule Stripe.SubscriptionTest do
     assert {:ok, %{"metadata" => %{"key" => "value"}}} =
       Subscription.update(subscription["id"], metadata: [key: "value"])
 
-    assert {:ok, %{"status" => "canceled"}} = Subscription.delete(subscription["id"])
+    assert {:ok, %{"status" => "active", "cancel_at_period_end" => true}} =
+      Subscription.delete(subscription["id"], at_period_end: true)
   end
 
   test "list all subscriptions" do

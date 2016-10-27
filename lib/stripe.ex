@@ -34,6 +34,10 @@ defmodule Stripe do
     Path.join(@api, endpoint)
   end
 
+  defp request_url(endpoint, []) do
+    Path.join(@api, endpoint)
+  end
+
   defp request_url(endpoint, data) do
     base_url = request_url(endpoint)
     query_params = Stripe.Utils.encode_data(data)
@@ -50,25 +54,8 @@ defmodule Stripe do
      {"Content-Type", "application/x-www-form-urlencoded"}]
   end
 
-  def request(:delete, endpoint) do
-    HTTPoison.delete(request_url(endpoint), create_headers())
-    |> handle_response
-  end
-
-  def request(:post, endpoint) do
-    HTTPoison.request(:post, request_url(endpoint), "", create_headers())
-    |> handle_response
-  end
-
-  def request(:post, endpoint, data) do
-    HTTPoison.request(:post, request_url(endpoint, data), "", create_headers())
-    |> handle_response
-  end
-
-  def request(:get, endpoint, pagination_opts \\ []) do
-    url = request_url(endpoint, pagination_opts)
-
-    HTTPoison.get(url, create_headers())
+  def request(action, endpoint, form \\ []) when action in [:get, :post, :delete] do
+    HTTPoison.request(action, request_url(endpoint, form), "", create_headers())
     |> handle_response
   end
 
