@@ -4,9 +4,5 @@ elixir:
 otp_release:
   - 18.0
 sudo: required
-install:
-  - mix local.rebar --force
-  - mix local.hex --force
-  - mix deps.get
 env:
   - MIX_ENV=test
