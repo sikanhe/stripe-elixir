@@ -86,6 +86,10 @@ defmodule Stripe do
     {:error, error_struct}
   end
 
+  defp handle_response({:error, %HTTPoison.Error{reason: reason}}) do
+    %APIConnectionError{message: "Network Error: #{reason}"}
+  end
+
   defp process_response_body(body) do
     Poison.decode! body
   end
