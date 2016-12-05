@@ -4,6 +4,11 @@ defmodule Stripe do
   """
 
   @api "https://api.stripe.com/v1/"
+  @client_version Mix.Project.config[:version]
+
+  def version do
+    @client_version
+  end
 
   alias Stripe.{APIConnectionError,
                 APIError,
@@ -45,12 +50,9 @@ defmodule Stripe do
     "#{base_url}?#{query_params}"
   end
 
-  defp create_headers do
-    app_version = File.read!("VERSION") |> String.trim
-    bearer_token = get_stripe_key()
-
-    [{"Authorization", "Bearer #{bearer_token}"},
-     {"User-Agent", "Stripe/v1 stripe-elixir/#{app_version}"},
+  def create_headers do
+    [{"Authorization", "Bearer #{get_stripe_key()}"},
+     {"User-Agent", "Stripe/v1 stripe-elixir/#{@client_version}"},
      {"Content-Type", "application/x-www-form-urlencoded"}]
   end
 
