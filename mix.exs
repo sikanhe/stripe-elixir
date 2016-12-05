@@ -3,7 +3,7 @@ defmodule Stripe.Mixfile do
 
   def project do
     [app: :stripe,
-     version: "0.4.0",
+     version: File.read!("VERSION") |> String.trim,
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,

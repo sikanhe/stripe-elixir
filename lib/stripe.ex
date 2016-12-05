@@ -46,7 +46,7 @@ defmodule Stripe do
   end
 
   defp create_headers do
-    app_version = Mix.Project.config[:version]
+    app_version = File.read!("VERSION") |> String.trim
     bearer_token = get_stripe_key()
 
     [{"Authorization", "Bearer #{bearer_token}"},
