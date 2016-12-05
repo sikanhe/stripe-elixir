@@ -2,7 +2,6 @@
 
 Stripe API client for Elixir. [Documentation](https://hexdocs.pm/stripe_elixir/api-reference.html)
 - Everything except for Relay features are complete and tested.
-- Currently working on client connection retry logic/network error handling.
 - Looking for more contributors/maintainers for this project, currently need help with documentation.
 
 ## Installation
