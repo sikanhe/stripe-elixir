@@ -29,7 +29,7 @@ defmodule Stripe.CustomerTest do
   end
 
   test "add/update/delete a card to a customer", %{customer: customer} do
-    {:ok, card} = Token.create(
+    {:ok, token} = Token.create(
       card: [
         number: "4242424242424242",
         exp_month: 7,
@@ -38,14 +38,14 @@ defmodule Stripe.CustomerTest do
       ]
     )
 
-    assert {:ok, %{"sources" => %{"data" => [card]}}} =
-      Customer.create_card(customer["id"], card["id"])
+    assert {:ok, %{"id" => source_id, "object" => "card"}} =
+      Customer.create_card(customer["id"], token["id"])
 
     assert {:ok, %{"name" => "new name"}} =
-      Customer.update_card(customer["id"], card["id"], name: "new name")
+      Customer.update_card(customer["id"], source_id, name: "new name")
 
     assert {:ok, %{"deleted" => true}} =
-      Customer.delete_card(customer["id"], card["id"])
+      Customer.delete_card(customer["id"], source_id)
   end
 
   test "remove discount from customer", %{customer: customer} do
