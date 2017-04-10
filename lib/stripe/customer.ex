@@ -21,12 +21,12 @@ defmodule Stripe.Customer do
     Stripe.request(:post, "#{endpoint}/#{customer_id}/sources/#{source_id}", updates)
   end
 
-  def create_source(customer_id, source: token) do
-    Stripe.request(:post, "#{endpoint}/#{customer_id}", [source: token])
+  def create_source(customer_id, source: token_or_dict) do
+    Stripe.request(:post, "#{endpoint}/#{customer_id}/sources", [source: token_or_dict])
   end
 
-  def delete_source(customer_id, source: token) do
-    Stripe.request(:delete, "#{endpoint}/#{customer_id}/sources/#{token}")
+  def delete_source(customer_id, source: token_or_dict) do
+    Stripe.request(:delete, "#{endpoint}/#{customer_id}/sources/#{token_or_dict}")
   end
 
   # card
