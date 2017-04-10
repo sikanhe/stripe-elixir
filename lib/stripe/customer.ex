@@ -56,4 +56,8 @@ defmodule Stripe.Customer do
   def delete_bank_account(customer_id, bank_acct_id) do
     delete_source(customer_id, source: bank_acct_id)
   end
+
+  def verify_bank_account(customer_id, bank_acct_id, amounts) do
+    Stripe.request(:post, "#{endpoint}/#{customer_id}/sources/#{bank_acct_id}/verify", amounts: amounts)
+  end
 end

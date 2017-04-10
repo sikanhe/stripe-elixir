@@ -56,4 +56,19 @@ defmodule Stripe.CustomerTest do
   test "delete a customer", %{customer: customer} do
     assert {:ok, %{"deleted" => true}} = Customer.delete(customer["id"])
   end
+
+  test "create and verify a bank account", %{customer: customer} do
+    {:ok, %{"id" => token}} = Token.create(
+      bank_account: %{
+        account_number: "000123456789",
+        routing_number: "110000000",
+        country: "US",
+        currency: "usd",
+        account_holder_name: "Sikan He",
+        account_holder_type: "individual"
+      }
+    )
+    {:ok, %{"id" => source_id}} = Customer.create_source(customer["id"], source: token)
+    {:ok, %{"status" => "verified"}} = Customer.verify_bank_account(customer["id"], source_id, [32, 45])
+  end
 end
