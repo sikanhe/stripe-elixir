@@ -4,44 +4,31 @@ defmodule Stripe.Account do
   def endpoint, do: "accounts"
 
   def reject(account_id, reason: reason) do
-    Stripe.request(:post, "#{endpoint()}/#{account_id}/reject")
+    Stripe.request(:post, "#{endpoint()}/#{account_id}/reject", reason: reason)
   end
 
-  def createExternalAccount(account_id, external_account: token_id) do
-    Stripe.request(
-      :post,
-      "#{endpoint()}/#{account_id}/external_accounts",
-      external_account: token_id
-    )
+  def create_externa_account(account_id, external_account: token_id) do
+    url = "#{endpoint()}/#{account_id}/external_accounts"
+    Stripe.request(:post, url, external_account: token_id)
   end
 
-  def retrieveExternalAccount(account_id, external_account_id) do
-    Stripe.request(
-      :get,
-      "#{endpoint()}/#{account_id}/external_accounts/#{external_account_id}"
-    )
+  def retrieve_external_account(account_id, external_account_id) do
+    url = "#{endpoint()}/#{account_id}/external_accounts/#{external_account_id}"
+    Stripe.request(:get, url)
   end
 
-  def updateExternalAccount(account_id, external_account_id, updates) do
-    Stripe.request(
-      :post,
-      "#{endpoint()}/#{account_id}/external_accounts/#{external_account_id}",
-      updates
-    )
+  def update_external_account(account_id, external_account_id, updates) do
+    url = "#{endpoint()}/#{account_id}/external_accounts/#{external_account_id}"
+    Stripe.request(:post, url, updates)
   end
 
-  def deleteExternalAccount(account_id, external_account_id) do
-    Stripe.request(
-      :delete,
-      "#{endpoint()}/#{account_id}/external_accounts/#{external_account_id}"
-    )
+  def delete_external_account(account_id, external_account_id) do
+    url = "#{endpoint()}/#{account_id}/external_accounts/#{external_account_id}"
+    Stripe.request(:delete, url)
   end
 
-  def listExternalAccount(account_id, opts \\ []) do
-    Stripe.request(
-      :get,
-      "#{endpoint()}/#{account_id}/external_accounts",
-      opts
-    )
+  def list_external_account(account_id, pagination_opts \\ []) do
+    url = "#{endpoint()}/#{account_id}/external_accounts"
+    Stripe.request(:get, url, pagination_opts)
   end
 end
