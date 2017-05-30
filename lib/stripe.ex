@@ -46,18 +46,27 @@ defmodule Stripe do
   defp request_url(endpoint, data) do
     base_url = request_url(endpoint)
     query_params = Stripe.Utils.encode_data(data)
-
     "#{base_url}?#{query_params}"
   end
 
-  def create_headers do
-    [{"Authorization", "Bearer #{get_stripe_key()}"},
-     {"User-Agent", "Stripe/v1 stripe-elixir/#{@client_version}"},
-     {"Content-Type", "application/x-www-form-urlencoded"}]
+  def create_headers(stripe_account: stripe_account_id) do 
+    create_headers([])  
   end
 
-  def request(action, endpoint, form \\ []) when action in [:get, :post, :delete] do
-    HTTPoison.request(action, request_url(endpoint, form), "", create_headers())
+  defp create_headers(opts) do
+    headers = 
+      [{"Authorization", "Bearer #{get_stripe_key()}"},
+       {"User-Agent", "Stripe/v1 stripe-elixir/#{@client_version}"},
+       {"Content-Type", "application/x-www-form-urlencoded"}]
+
+    case Keyword.get(opts, :stripe_account) do 
+      nil -> required_headers 
+      account_id -> [{"Stripe-Account", stripe_account_id} | headers]
+    end
+  end
+
+  def request(action, endpoint, data \\ [], opts \\ []) when action in [:get, :post, :delete] do
+    HTTPoison.request(action, request_url(endpoint, data), "", create_headers(opts))
     |> handle_response
   end
 
