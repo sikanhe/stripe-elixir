@@ -56,8 +56,8 @@ defmodule Stripe do
        {"Content-Type", "application/x-www-form-urlencoded"}]
 
     case Keyword.get(opts, :stripe_account) do 
-      nil -> required_headers 
-      account_id -> [{"Stripe-Account", stripe_account_id} | headers]
+      nil -> headers 
+      account_id -> [{"Stripe-Account", account_id} | headers]
     end
   end
 
