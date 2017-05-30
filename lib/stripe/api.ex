@@ -26,7 +26,7 @@ defmodule Stripe.API do
         """
         def update(id, data, opts \\ []) do
           resource_url = Path.join(endpoint(), id)
-          Stripe.request(:post, resource_url, data, opts \\ [])
+          Stripe.request(:post, resource_url, data, opts)
         end
       end
 
