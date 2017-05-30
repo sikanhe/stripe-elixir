@@ -40,22 +40,22 @@ defmodule Stripe.AccountTest do
     account_id = account["id"]
 
     assert {:ok, external_account} =
-      Stripe.Account.createExternalAccount(account_id, external_account: token["id"])
+      Stripe.Account.create_external_account(account_id, external_account: token["id"])
     assert {:ok, external_account2} =
-      Stripe.Account.createExternalAccount(account_id, external_account: token2["id"])
+      Stripe.Account.create_external_account(account_id, external_account: token2["id"])
 
     url = "/v1/accounts/#{account_id}/external_accounts"
 
     assert {:ok, %{"object" => "list", "url" => ^url}}
-      = Stripe.Account.listExternalAccount(account_id)
+      = Stripe.Account.list_external_account(account_id)
 
     external_account_id = external_account["id"]
     external_account_id2 = external_account2["id"]
 
-    assert {:ok, ^external_account} = Stripe.Account.retrieveExternalAccount(account_id, external_account_id)
+    assert {:ok, ^external_account} = Stripe.Account.retrieve_external_account(account_id, external_account_id)
     assert {:ok, %{"metadata" => %{"test" => "data"}}} =
-      Stripe.Account.updateExternalAccount(account_id, external_account_id, metadata: [test: "data"])
-    assert {:ok, _} = Stripe.Account.deleteExternalAccount(account_id, external_account_id2)
-    assert {:error, _} = Stripe.Account.retrieveExternalAccount(account_id, external_account_id2)
+      Stripe.Account.update_external_account(account_id, external_account_id, metadata: [test: "data"])
+    assert {:ok, _} = Stripe.Account.delete_external_account(account_id, external_account_id2)
+    assert {:error, _} = Stripe.Account.retrieve_external_account(account_id, external_account_id2)
   end
 end
