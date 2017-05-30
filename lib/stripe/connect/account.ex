@@ -11,7 +11,7 @@ defmodule Stripe.Account do
     "#{endpoint()}/#{account_id}/external_accounts/#{external_account_id}"
   end 
 
-  def create_externa_account(account_id, external_account: token_id) do
+  def create_external_account(account_id, external_account: token_id) do
     url = external_account_endpoint(account_id)
     Stripe.request(:post, url, external_account: token_id)
   end
