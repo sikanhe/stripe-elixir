@@ -49,10 +49,6 @@ defmodule Stripe do
     "#{base_url}?#{query_params}"
   end
 
-  def create_headers(stripe_account: stripe_account_id) do 
-    create_headers([])  
-  end
-
   defp create_headers(opts) do
     headers = 
       [{"Authorization", "Bearer #{get_stripe_key()}"},
