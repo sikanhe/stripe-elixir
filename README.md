@@ -10,7 +10,7 @@ Stripe API client for Elixir. [Documentation](https://hexdocs.pm/stripe_elixir/a
   
 
     def deps do
-      [{:stripe, "~> 0.4.2", hex: :stripe_elixir}]
+      [{:stripe, "~> 0.6.0", hex: :stripe_elixir}]
     end
 
   2. (Pre-Elixir 1.4) Ensure `stripe` is started before your application:
