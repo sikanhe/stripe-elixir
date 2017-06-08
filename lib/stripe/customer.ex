@@ -7,57 +7,57 @@ defmodule Stripe.Customer do
 
   # discount
 
-  def delete_discount(customer_id) do
-    Stripe.request(:delete, "#{endpoint}/#{customer_id}/discount")
+  def delete_discount(customer_id, opts \\ []) do
+    Stripe.request(:delete, "#{endpoint()}/#{customer_id}/discount", [], opts)
   end
 
   # sources
 
-  def retrieve_source(customer_id, source_id) do
-    Stripe.request(:get, "#{endpoint}/#{customer_id}/sources/#{source_id}")
+  def retrieve_source(customer_id, source_id, opts \\ []) do
+    Stripe.request(:get, "#{endpoint()}/#{customer_id}/sources/#{source_id}", [], opts)
   end
 
-  def update_source(customer_id, source_id, updates) do
-    Stripe.request(:post, "#{endpoint}/#{customer_id}/sources/#{source_id}", updates)
+  def update_source(customer_id, source_id, updates, opts \\ []) do
+    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources/#{source_id}", updates, opts)
   end
 
-  def create_source(customer_id, source: token_or_dict) do
-    Stripe.request(:post, "#{endpoint}/#{customer_id}/sources", [source: token_or_dict])
+  def create_source(customer_id, data, opts \\ []) do
+    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources", data, opts)
   end
 
-  def delete_source(customer_id, source: token_or_dict) do
-    Stripe.request(:delete, "#{endpoint}/#{customer_id}/sources/#{token_or_dict}")
+  def delete_source(customer_id, data, opts \\ []) do
+    Stripe.request(:delete, "#{endpoint()}/#{customer_id}/sources/#{data[:source]}", [], opts)
   end
 
   # card
 
-  def create_card(customer_id, card_id) do
-    create_source(customer_id, source: card_id)
+  def create_card(customer_id, card_id, opts \\ []) do
+    create_source(customer_id, [source: card_id], opts)
   end
-
+ 
   def update_card(customer_id, card_id, updates) do
     update_source(customer_id, card_id, updates)
   end
 
-  def delete_card(customer_id, card_id) do
-    delete_source(customer_id, source: card_id)
+  def delete_card(customer_id, card_id, opts \\ []) do
+    delete_source(customer_id, [source: card_id], opts)
   end
 
   # bank_account
 
-  def create_bank_account(customer_id, bank_acct_id) do
-    create_source(customer_id, source: bank_acct_id)
+  def create_bank_account(customer_id, bank_acct_id, opts \\ []) do
+    create_source(customer_id, [source: bank_acct_id], opts)
   end
 
-  def update_bank_account(customer_id, bank_acct_id, updates) do
-    update_source(customer_id, bank_acct_id, updates)
+  def update_bank_account(customer_id, bank_acct_id, updates, opts \\ []) do
+    update_source(customer_id, bank_acct_id, updates, opts)
   end
 
-  def delete_bank_account(customer_id, bank_acct_id) do
-    delete_source(customer_id, source: bank_acct_id)
+  def delete_bank_account(customer_id, bank_acct_id, opts \\ []) do
+    delete_source(customer_id, [source: bank_acct_id], opts)
   end
 
-  def verify_bank_account(customer_id, bank_acct_id, amounts) do
-    Stripe.request(:post, "#{endpoint}/#{customer_id}/sources/#{bank_acct_id}/verify", amounts: amounts)
+  def verify_bank_account(customer_id, bank_acct_id, amounts, opts \\ []) do
+    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources/#{bank_acct_id}/verify", [amounts: amounts], opts)
   end
 end

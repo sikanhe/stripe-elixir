@@ -5,11 +5,11 @@ defmodule Stripe.ApplicationFee do
     "application_fees"
   end
 
-  def refund(fee_id) do
-    Stripe.request(:post, "#{endpoint}/#{fee_id}/refund")
+  def refund(fee_id, opts \\ []) do
+    Stripe.request(:post, "#{endpoint()}/#{fee_id}/refund", [], opts)
   end
 
-  def retrieve_refund(fee_id, refund_id) do
-    Stripe.request(:get, "#{endpoint}/#{fee_id}/refund/#{refund_id}")
+  def retrieve_refund(fee_id, refund_id, opts \\ []) do
+    Stripe.request(:get, "#{endpoint()}/#{fee_id}/refund/#{refund_id}", [], opts)
   end
 end

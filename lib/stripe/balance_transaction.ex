@@ -6,6 +6,6 @@ defmodule Stripe.BalanceTransaction do
   end
 
   def all(opts \\ []) do
-    list(opts)
+    list([], opts)
   end
 end

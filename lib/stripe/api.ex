@@ -5,8 +5,8 @@ defmodule Stripe.API do
         @doc """
         Create a(n) #{__MODULE__ |> to_string |> String.split(".") |> List.last}
         """
-        def create(form) do
-          Stripe.request(:post, endpoint(), form)
+        def create(data, opts \\ []) do
+          Stripe.request(:post, endpoint(), data, opts)
         end
       end
 
@@ -14,9 +14,9 @@ defmodule Stripe.API do
         @doc """
         Retrive a(n) #{__MODULE__ |> to_string |> String.split(".") |> List.last} by its ID
         """
-        def retrieve(id) when is_bitstring(id) do
+        def retrieve(id, opts \\ []) when is_bitstring(id) do
           resource_url = Path.join(endpoint(), id)
-          Stripe.request(:get, resource_url)
+          Stripe.request(:get, resource_url, [], opts)
         end
       end
 
@@ -24,9 +24,9 @@ defmodule Stripe.API do
         @doc """
         Update a(n) #{__MODULE__ |> to_string |> String.split(".") |> List.last}
         """
-        def update(id, updates) do
+        def update(id, data, opts \\ []) do
           resource_url = Path.join(endpoint(), id)
-          Stripe.request(:post, resource_url, updates)
+          Stripe.request(:post, resource_url, data, opts)
         end
       end
 
@@ -34,8 +34,8 @@ defmodule Stripe.API do
         @doc """
         List all #{__MODULE__ |> to_string |> String.split(".") |> List.last}s
         """
-        def list(pagination_opts \\ []) when is_list(pagination_opts) do
-          Stripe.request(:get, endpoint(), pagination_opts)
+        def list(pagination_opts \\ [], opts \\ []) when is_list(pagination_opts) do
+          Stripe.request(:get, endpoint(), pagination_opts, opts)
         end
       end
 
@@ -43,9 +43,9 @@ defmodule Stripe.API do
         @doc """
         Delete a(n) #{__MODULE__ |> to_string |> String.split(".") |> List.last}
         """
-        def delete(id) when is_bitstring(id) do
+        def delete(id, data \\ [], opts \\ []) when is_bitstring(id) do
           resource_url = Path.join(endpoint(), id)
-          Stripe.request(:delete, resource_url)
+          Stripe.request(:delete, resource_url, data, opts)
         end
       end
     end
