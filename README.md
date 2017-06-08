@@ -50,7 +50,7 @@ Create a customer:
     {:ok, %{"id" => "cus_asdfghjkl"} =
        Stripe.Customer.create(email: "example@gmail.com")
        
-Note that either KeywordLists or Maps with either String or Atom keys aracceptable for arguments and options. So all of the following would also work: 
+Note that either KeywordLists or Maps with either String or Atom keys are acceptable for arguments and options. So all of the following would also work: 
    
     Stripe.Customer.create(%{email: "example@gmail.com"}) 
     Stripe.Customer.create(%{"email" => "example@gmail.com"}) 
@@ -72,4 +72,4 @@ Delete the customer
    
 To perform a Direct Charge on a connected stripe account, simply pass :stripe_account as an option 
   
-    Stripe.Charge.create([customer: "cus_asdfghjkl",  "amount: 400], stripe_account: "acct_sOMeAcCountId")
+    Stripe.Charge.create([customer: "cus_asdfghjkl", amount: 400], stripe_account: "acct_sOMeAcCountId")
