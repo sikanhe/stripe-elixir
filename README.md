@@ -25,13 +25,13 @@ end
   3. Make sure your stripe secret_key is added to your config file:
 
 ```elixir
-config :stripe, :secret_key, YOUR_SECRET_KEY
+config :stripe, :secret_key, <YOUR_SECRET_KEY>
 ```
 
   4. Alternatively, you can also set the secret key as an environment variable:
 
 ```bash
-export STRIPE_SECRET_KEY=YOUR_SECRET_KEY
+export STRIPE_SECRET_KEY=<YOUR_SECRET_KEY>
 ```
 
 ## Basic Usage
