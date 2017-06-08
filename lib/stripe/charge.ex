@@ -6,7 +6,7 @@ defmodule Stripe.Charge do
   end
 
   def capture_endpoint(id) do
-    "#{endpoint}/#{id}/capture"
+    "#{endpoint()}/#{id}/capture"
   end
 
   def capture(id, params \\ []) do

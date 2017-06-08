@@ -3,7 +3,7 @@ defmodule Stripe.AccountTest do
 
   test "create/update/retrieve/delete an account" do
     assert {:ok, account} = Stripe.Account.create(managed: true)
-    assert {:ok, %{"email" => email}} = Stripe.Account.retrieve(account["id"])
+    assert {:ok, %{"email" => _email}} = Stripe.Account.retrieve(account["id"])
     assert {:ok, %{"metadata" => %{"test" => "data"}}} =
       Stripe.Account.update(account["id"], metadata: [test: "data"])
     assert {:ok, _} = Stripe.Account.delete(account["id"])

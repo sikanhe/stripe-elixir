@@ -8,25 +8,25 @@ defmodule Stripe.Customer do
   # discount
 
   def delete_discount(customer_id) do
-    Stripe.request(:delete, "#{endpoint}/#{customer_id}/discount")
+    Stripe.request(:delete, "#{endpoint()}/#{customer_id}/discount")
   end
 
   # sources
 
   def retrieve_source(customer_id, source_id) do
-    Stripe.request(:get, "#{endpoint}/#{customer_id}/sources/#{source_id}")
+    Stripe.request(:get, "#{endpoint()}/#{customer_id}/sources/#{source_id}")
   end
 
   def update_source(customer_id, source_id, updates) do
-    Stripe.request(:post, "#{endpoint}/#{customer_id}/sources/#{source_id}", updates)
+    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources/#{source_id}", updates)
   end
 
   def create_source(customer_id, source: token_or_dict) do
-    Stripe.request(:post, "#{endpoint}/#{customer_id}/sources", [source: token_or_dict])
+    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources", [source: token_or_dict])
   end
 
   def delete_source(customer_id, source: token_or_dict) do
-    Stripe.request(:delete, "#{endpoint}/#{customer_id}/sources/#{token_or_dict}")
+    Stripe.request(:delete, "#{endpoint()}/#{customer_id}/sources/#{token_or_dict}")
   end
 
   # card
@@ -58,6 +58,6 @@ defmodule Stripe.Customer do
   end
 
   def verify_bank_account(customer_id, bank_acct_id, amounts) do
-    Stripe.request(:post, "#{endpoint}/#{customer_id}/sources/#{bank_acct_id}/verify", amounts: amounts)
+    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources/#{bank_acct_id}/verify", amounts: amounts)
   end
 end
