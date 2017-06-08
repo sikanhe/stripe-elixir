@@ -16,7 +16,7 @@ defmodule Stripe.API do
         """
         def retrieve(id, opts \\ []) when is_bitstring(id) do
           resource_url = Path.join(endpoint(), id)
-          Stripe.request(:get, resource_url, opts)
+          Stripe.request(:get, resource_url, [], opts)
         end
       end
 
