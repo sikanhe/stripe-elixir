@@ -9,7 +9,7 @@ defmodule Stripe.Dispute do
     "#{endpoint()}/#{id}/close"
   end
 
-  def close(id) do
-    Stripe.request(:post, close_dispute_endpoint(id))
+  def close(id, opts \\ []) do
+    Stripe.request(:post, close_dispute_endpoint(id), [], opts)
   end
 end

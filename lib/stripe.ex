@@ -62,7 +62,7 @@ defmodule Stripe do
     end
   end
 
-  def request(action, endpoint, data \\ [], opts \\ []) when action in [:get, :post, :delete] do
+  def request(action, endpoint, data, opts) when action in [:get, :post, :delete] do
     HTTPoison.request(action, request_url(endpoint, data), "", create_headers(opts))
     |> handle_response
   end
