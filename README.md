@@ -20,7 +20,7 @@ end
 def application do
   [applications: [:stripe]]
 end
-``` 
+```
 
   3. Make sure your stripe secret_key is added to your config file:
 
@@ -48,44 +48,67 @@ Returns {:ok, RESPONSE_BODY} when the request is successful.
 {:error, %ERROR_STRUCT{}} tuples are returned when there is a request/api error
 See all error types at https://stripe.com/docs/api/ruby#errors
 
-## Some Basic Examples 
+## Some Basic Examples
 Create a customer
- 
-```elixir 
+
+```elixir
 {:ok, %{"id" => "cus_asdfghjkl"} =
     Stripe.Customer.create(email: "example@gmail.com")
 ```
-       
-Note that either KeywordLists or Maps with either String or Atom keys are acceptable for arguments and options. So all of the following would also work: 
-   
 
-```elixir 
-Stripe.Customer.create(%{email: "example@gmail.com"}) 
-Stripe.Customer.create(%{"email" => "example@gmail.com"}) 
-Stripe.Customer.create([{"email", "example@gmail.com"}]) 
+Note that either KeywordLists or Maps with either String or Atom keys are acceptable for arguments and options. So all of the following would also work:
+
+
+```elixir
+Stripe.Customer.create(%{email: "example@gmail.com"})
+Stripe.Customer.create(%{"email" => "example@gmail.com"})
+Stripe.Customer.create([{"email", "example@gmail.com"}])
 ```
 
-Retrieve that customer: 
+Retrieve that customer:
 ```elixir   
 {:ok, customer} = Stripe.Customer.retrieve("cus_asdfghjkl")
-``` 
+```
 
-Update the customer: 
-```elixir 
-{:ok, %{"metadata" => %{"somedata" => "somevalue"}}} = 
+Update the customer:
+```elixir
+{:ok, %{"metadata" => %{"somedata" => "somevalue"}}} =
   Stripe.Customer.update("cus_asdfghjkl", metadata: [somedata: "somevalue"])
 ```
-    
-Delete the customer 
 
-```elixir 
+Delete the customer
+
+```elixir
 {:ok, %{"deleted" => true}} = Stripe.Customer.delete("cus_asdfghjkl")
 ```
-    
-## Stripe Connect 
-   
-To perform a Direct Charge on a connected stripe account, simply pass :stripe_account as an option 
-  
-```elixir 
+
+## Stripe Connect
+
+To perform a Direct Charge on a connected stripe account, simply pass :stripe_account as an option
+
+```elixir
 Stripe.Charge.create([customer: "cus_asdfghjkl", amount: 400], stripe_account: "acct_sOMeAcCountId")
+```
+
+## Handling Webhooks
+
+Stripe uses webhooks to notify your web app with events. `Stripe.Webhook` provides `construct_event/3` to authenticate the requests, which can be useful in plugs.
+
+```elixir
+payload = # HTTP content body (e.g. from Plug.Conn.read_body/3)
+signature = # 'Stripe-Signature' HTTP header (e.g. from Plug.Conn.get_req_header/2)
+secret = # Provided by Stripe
+
+case Stripe.Webhook.construct_event(payload, signature, secret) do
+  {:ok, event} ->
+    # Return 2XX
+  {:error, %Stripe.SignatureVerificationError{}} ->
+    # Return non-2XX and handle error
+end
+```
+
+The default tolerance is 5 minutes (300 seconds as per official libraries). If your app is rejecting requests because the tolerance is too low, consider passing a higher number to `construct_event/4`.
+
+```elixir
+Stripe.Webhook.construct_event(payload, signature, secret, 600)
 ```
