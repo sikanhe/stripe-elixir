@@ -7,9 +7,10 @@ defmodule Stripe.Connect do
 
   @spec authorize_url(Keyword.t) :: binary
   def authorize_url(opts \\ []) do 
+    client_id = Keyword.get(opts, :client_id) || get_client_id()
     query_params = 
       opts 
-      |> Keyword.put_new(:client_id, get_client_id())
+      |> Keyword.put_new(:client_id, client_id)
       |> Keyword.put_new(:scope, "read_write")
       |> Keyword.put_new(:response_type, "code")
       |> Stripe.Utils.encode_data()
