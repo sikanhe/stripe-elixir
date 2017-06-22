@@ -28,7 +28,7 @@ defmodule Stripe.Connect do
       STRIPE_CLIENT_ID=<YOUR_CLIENT_ID>
 
     You can also pass in client_id option for Stripe.Connect.generate_authorize_url/1
-      Stripe.Connect.generate_authorize_url(client_id: <YOUR_CLIENT_ID>)
+      Stripe.Connect.authorize_url(client_id: <YOUR_CLIENT_ID>)
   """
 
   defp get_client_id do 
