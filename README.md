@@ -90,6 +90,22 @@ To perform a Direct Charge on a connected stripe account, simply pass :stripe_ac
 Stripe.Charge.create([customer: "cus_asdfghjkl", amount: 400], stripe_account: "acct_sOMeAcCountId")
 ```
 
+#### Generate a Connect authentication url via `Stripe.Connect.generate_button_url/2`. 
+
+```elixir 
+Stripe.Connect.generate_authorize_url([
+  callback_url: <OPTIONAL CALLBACK URL>,
+  csrf_token: <OPTIONAL CSRF TOKEN>,
+  client_id: <OPTIONAL STRIPE PLATFORM CLIENT ID>
+])
+```
+
+#### Options: 
+- `callback_url`: An optional callback url after authorization succeeds. 
+- `csrf_token`: You can protect your request from CSRF attacks by passing a token.
+- `client_id`: You can pass in an optional client_id to be used for this url. Defaults to `STRIPE_CLIENT_ID` environment variable or `config :stripe, :client_id` config value. 
+
+
 ## Handling Webhooks
 
 Stripe uses webhooks to notify your web app with events. `Stripe.Webhook` provides `construct_event/3` to authenticate the requests, which can be useful in plugs.
