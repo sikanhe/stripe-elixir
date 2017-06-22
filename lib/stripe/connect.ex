@@ -32,7 +32,7 @@ defmodule Stripe.Connect do
   """
 
   defp get_client_id do 
-    System.get_env(:STRIPE_CLIENT_ID) || 
+    System.get_env("STRIPE_CLIENT_ID") || 
     Application.get_env(:stripe, :client_id) || 
     raise Stripe.AuthenticationError, message: @missing_client_id_error_message
   end
