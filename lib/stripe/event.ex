@@ -3,7 +3,7 @@ defmodule Stripe.Event do
   Functions related to events
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary, binary) :: Stripe.Request.t
   def endpoint(event_id \\ "") do

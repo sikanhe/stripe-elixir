@@ -1,5 +1,5 @@
 defmodule Stripe.Dispute do
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(dispute_id \\ "") do

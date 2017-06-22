@@ -2,8 +2,8 @@ defmodule Stripe.Charge do
   @moduledoc"""
   Functions related to charges
   """
-  @behavior Stripe.API
-  
+  @behaviour Stripe.API
+
   @spec endpoint(binary) :: binary
   def endpoint(id \\ "") do
     "charges/#{id}"

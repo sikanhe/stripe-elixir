@@ -1,5 +1,5 @@
 defmodule Stripe.ApplicationFee do
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(application_fee_id \\ "") do

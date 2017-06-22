@@ -3,7 +3,7 @@ defmodule Stripe.Transfer do
   Functions related to transfers.
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary 
   def endpoint(transfer_id \\ "") do

@@ -3,7 +3,7 @@ defmodule Stripe.CountrySpec do
   Functions related to connect country specs.
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(country_spec_id) do

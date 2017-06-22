@@ -2,8 +2,8 @@ defmodule Stripe.Customer do
   @moduledoc"""
   Functions related to a customer
   """
-  @behavior Stripe.API
-  
+  @behaviour Stripe.API
+
   @spec endpoint(binary) :: binary
   def endpoint(id \\ "") do
     "/customers/#{id}"

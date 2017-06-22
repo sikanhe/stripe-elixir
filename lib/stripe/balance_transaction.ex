@@ -3,7 +3,7 @@ defmodule Stripe.BalanceTransaction do
   Functions related for balance history
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(id \\ "") do

@@ -3,7 +3,7 @@ defmodule Stripe.Coupon do
   Functions related to coupons
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(coupon_id) do

@@ -1,6 +1,6 @@
 defmodule Stripe.File do
-  @behavior Stripe.API
-  
+  @behaviour Stripe.API
+
   @spec endpoint(binary) :: binary
   def endpoint(file_id \\ "") do
     "files/#{file_id}"

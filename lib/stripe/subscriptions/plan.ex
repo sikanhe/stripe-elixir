@@ -3,7 +3,7 @@ defmodule Stripe.Plan do
   Functions related to subscription plans.
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(plan_id) do

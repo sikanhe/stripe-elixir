@@ -3,7 +3,7 @@ defmodule Stripe.Token do
   Functions related to tokens
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(token_id \\ "") do 

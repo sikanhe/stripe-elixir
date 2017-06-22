@@ -3,7 +3,7 @@ defmodule Stripe.Subscription do
   Functions related to subscriptions
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(subscription_id \\ "") do

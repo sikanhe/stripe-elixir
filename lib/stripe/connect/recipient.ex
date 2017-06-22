@@ -3,7 +3,7 @@ defmodule Stripe.Recipient do
   Functions related to recipents
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(recipient_id \\ "") do

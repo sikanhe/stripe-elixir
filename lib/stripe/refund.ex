@@ -3,7 +3,7 @@ defmodule Stripe.Refund do
   Functions related to refunds.
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
   
   @spec endpoint(binary) :: binary
   def endpoint(refund_id \\ "") do

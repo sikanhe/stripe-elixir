@@ -2,8 +2,8 @@ defmodule Stripe.Account do
   @moduledoc"""
   Functions related to connect accounts
   """
-  
-  @behavior Stripe.API
+
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(account_id \\ "") do 

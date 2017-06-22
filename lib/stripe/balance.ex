@@ -3,7 +3,7 @@ defmodule Stripe.Balance do
   Functions related to get balance information
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint :: binary
   def endpoint do

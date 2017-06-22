@@ -3,7 +3,7 @@ defmodule Stripe.InvoiceItem do
   Functions related to invoice items
   """
 
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(invoice_item_id \\ "") do

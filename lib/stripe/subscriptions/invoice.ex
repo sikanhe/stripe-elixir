@@ -1,5 +1,5 @@
 defmodule Stripe.Invoice do
-  @behavior Stripe.API
+  @behaviour Stripe.API
 
   @spec endpoint(binary) :: binary
   def endpoint(invoice_id \\ "") do
