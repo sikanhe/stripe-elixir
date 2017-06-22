@@ -12,7 +12,7 @@ defmodule Stripe.ConnectTest do
     assert url =~ "state=TEST_CSRF_TOKEN"
     assert url =~ "redirect_uri=TEST_REDIRECT_URL"
     assert url =~ "scope=read_write"
-    assert url =~ "response=code"
+    assert url =~ "response_type=code"
   end
 
   test "Stripe.Connect.authorize_url/1 should raise AuthenticationError when client_id is not set" do
