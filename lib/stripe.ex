@@ -19,7 +19,7 @@ defmodule Stripe do
 
   @missing_secret_key_error_message"""
     The secret_key settings is required to use stripe. Please include your
-    strip api key in your application config file like so:
+    stripe secret api key in your application config file like so:
 
       config :stripe, secret_key: YOUR_SECRET_KEY
 
