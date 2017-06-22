@@ -7,7 +7,7 @@ defmodule Stripe.Utils do
   Encodes the given map or list of tuples.
   Borrowed from "https://github.com/elixir-lang/plug/blob/master/lib/plug/conn/query.ex"
   """
-  def encode_data(kv, encoder \\ &to_string/1) do
+  def encode_params(kv, encoder \\ &to_string/1) do
    IO.iodata_to_binary encode_pair("", kv, encoder)
   end
 

@@ -1,23 +1,39 @@
 defmodule Stripe.Invoice do
-  use Stripe.API, [:create, :retrieve, :update, :list]
+  @behavior Stripe.API
 
-  def endpoint do
-    "invoices"
+  @spec endpoint(binary) :: binary
+  def endpoint(invoice_id \\ "") do
+    "invoices/#{invoice_id}"
   end
 
+  @spec line_items(Enum.t) :: Stripe.Request.t
   def line_items(%{"id" => invoice_id}) do
     line_items(invoice_id)
   end
-
-  def line_items(invoice_id, pagination_opts \\ [], opts \\ []) do
-    Stripe.request(:get, "#{endpoint()}/#{invoice_id}/lines", pagination_opts, opts)
+  
+  @spec retrieve_line_items(binary, Enum.t) :: Stripe.Request.t
+  def line_items(invoice_id, pagination_opts \\ []) do
+    %Stripe.Request{
+      method: :get,
+      endpoint: "#{endpoint(invoice_id)}/lines",
+      params: pagination_opts
+    }
   end
 
-  def upcoming(data, opts \\ []) do
-    Stripe.request(:get, "#{endpoint()}/upcoming", data, opts)
+  @spec upcoming(Enum.t) :: Stripe.Request.t
+  def upcoming(params) do
+    %Stripe.Request{
+      method: :get,
+      endpoint: "#{endpoint()}/upcoming",
+      params: params
+    }
   end
 
-  def pay(invoice_id, opts \\ []) do
-    Stripe.request(:post, "#{endpoint()}/#{invoice_id}/pay", [], opts)
+  @spec pay(binary) :: Stripe.Request.t
+  def pay(invoice_id) do
+    %Stripe.Request{
+      method: :post,
+      endpoint: "#{endpoint(invoice_id)}/pay"
+    }
   end
 end

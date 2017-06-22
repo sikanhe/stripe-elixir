@@ -30,29 +30,26 @@ defmodule Stripe do
     """
   end
 
-  defp get_secret_key do
+  defp get_secret_key(opts) do
+    Keyword.get(opts, :secret_key) ||
     System.get_env("STRIPE_SECRET_KEY") || 
     Application.get_env(:stripe, :secret_key) || 
     raise MissingSecretKeyError
-  end
-
-  defp request_url(endpoint) do
-    Path.join(@api, endpoint)
   end
 
   defp request_url(endpoint, []) do
     Path.join(@api, endpoint)
   end
 
-  defp request_url(endpoint, data) do
+  defp request_url(endpoint, params) do
     base_url = request_url(endpoint)
-    query_params = Stripe.Utils.encode_data(data)
+    query_params = Stripe.Utils.encode_data(params)
     "#{base_url}?#{query_params}"
   end
 
   defp create_headers(opts) do
     headers = 
-      [{"Authorization", "Bearer #{get_secret_key()}"},
+      [{"Authorization", "Bearer #{get_secret_key(opts)}"},
        {"User-Agent", "Stripe/v1 stripe-elixir/#{@client_version}"},
        {"Content-Type", "application/x-www-form-urlencoded"}]
 
@@ -62,9 +59,20 @@ defmodule Stripe do
     end
   end
 
-  def request(action, endpoint, data, opts) when action in [:get, :post, :delete] do
-    HTTPoison.request(action, request_url(endpoint, data), "", create_headers(opts))
-    |> handle_response
+  def request(%Stripe.Request{method: method, endpoint: endpoint, params: params}, opts \\ []) do
+    HTTPoison.request(
+      method, 
+      request_url(endpoint, params), 
+      <<>>, 
+      create_headers(opts)
+    )
+  end
+
+  def request!(%Stripe.Request{} = request_struct, opts \\ []) do 
+    case request(request_struct, opts) do 
+      {:ok, result} -> result 
+      {:error, error} -> raise error
+    end
   end
 
   defp handle_response({:ok, %{body: body, status_code: 200}}) do

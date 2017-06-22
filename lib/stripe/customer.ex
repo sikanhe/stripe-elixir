@@ -1,63 +1,115 @@
 defmodule Stripe.Customer do
-  use Stripe.API, [:retrieve, :update, :create, :list, :delete]
+  @moduledoc"""
+  Functions related to a customer
+  """
+  @behavior Stripe.API
+  
+  @spec endpoint(binary) :: binary
+  def endpoint(id \\ "") do
+    "/customers/#{id}"
+  end
 
-  def endpoint do
-    "/customers"
+  @spec list(Enum.t) :: Stripe.Request.t
+  def list(pagination_opts \\ []) do 
+    %Stripe.Request{
+      method: :get,
+      endpoint: endpoint(),
+      params: pagination_opts
+    }
+  end
+  
+  @spec retrieve(binary) :: Stripe.Request.t
+  def retrieve(customer_id) do
+    %Stripe.Request{
+      method: :get,
+      endpoint: endpoint(customer_id)
+    }
+  end
+
+  @spec create(Enum.t) :: Stripe.Request.t
+  def create(params) do
+    %Stripe.Request{
+      method: :post,
+      endpoint: endpoint(),
+      params: params
+    }
+  end
+
+  @spec update(binary, Enum.t) :: Stripe.Request.t
+  def update(customer_id, params) do
+    %Stripe.Request{
+      method: :post,
+      endpoint: endpoint(customer_id),
+      params: params
+    }
+  end
+
+  @spec delete(binary) :: Stripe.Request.t
+  def delete(customer_id) do
+    %Stripe.Request{
+      method: :delete,
+      endpoint: endpoint(customer_id)
+    }
   end
 
   # discount
 
-  def delete_discount(customer_id, opts \\ []) do
-    Stripe.request(:delete, "#{endpoint()}/#{customer_id}/discount", [], opts)
+  @spec delete_discount(binary) :: Stripe.Request.t
+  def delete_discount(customer_id) do
+    %Stripe.Request{
+      method: :delete,
+      endpoint: "#{endpoint(customer_id)}/discount"
+    }
   end
 
   # sources
 
-  def retrieve_source(customer_id, source_id, opts \\ []) do
-    Stripe.request(:get, "#{endpoint()}/#{customer_id}/sources/#{source_id}", [], opts)
+  @spec retrieve_source(binary, binary) :: Stripe.Request.t 
+  def retrieve_source(customer_id, source_id) do 
+    %Stripe.request{
+      method: :get,
+      endpoint: "#{endpoint(customer_id)}/sources/#{source_id}"
+    }
   end
 
-  def update_source(customer_id, source_id, updates, opts \\ []) do
-    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources/#{source_id}", updates, opts)
+  @spec update_source(binary, binary, params) :: Stripe.Request.t
+  def update_source(customer_id, source_id, params) do
+    %Stripe.Request{
+      method: :post,
+      endpoint: "#{endpoint(customer_id)}/sources/#{source_id}",
+      params: params
+    }
   end
 
-  def create_source(customer_id, data, opts \\ []) do
-    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources", data, opts)
+  @spec create_source(binary, params) :: Stripe.Request.t
+  def create_source(customer_id, params) do
+    %Stripe.Request{
+      method: :post,
+      endpoint: "#{endpoint(customer_id)}/sources",
+      params: params
+    }
   end
 
-  def delete_source(customer_id, data, opts \\ []) do
-    Stripe.request(:delete, "#{endpoint()}/#{customer_id}/sources/#{data[:source]}", [], opts)
+  @spec delete_source(binary, binary) :: Stripe.Request.t
+  def delete_source(customer_id, source_id) do
+    %Stripe.Request{
+      method: :delete,
+      endpoint: "#{endpoint(customer_id)}/sources/#{source_id}"
+    }
   end
 
-  # card
+  @doc """ 
+  Verify a bank account using two small deposit amounts (in cents). 
 
-  def create_card(customer_id, card_id, opts \\ []) do
-    create_source(customer_id, [source: card_id], opts)
-  end
- 
-  def update_card(customer_id, card_id, updates) do
-    update_source(customer_id, card_id, updates)
-  end
-
-  def delete_card(customer_id, card_id, opts \\ []) do
-    delete_source(customer_id, [source: card_id], opts)
-  end
-
-  # bank_account
-
-  def create_bank_account(customer_id, bank_acct_id, opts \\ []) do
-    create_source(customer_id, [source: bank_acct_id], opts)
-  end
-
-  def update_bank_account(customer_id, bank_acct_id, updates, opts \\ []) do
-    update_source(customer_id, bank_acct_id, updates, opts)
-  end
-
-  def delete_bank_account(customer_id, bank_acct_id, opts \\ []) do
-    delete_source(customer_id, [source: bank_acct_id], opts)
-  end
-
-  def verify_bank_account(customer_id, bank_acct_id, amounts, opts \\ []) do
-    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources/#{bank_acct_id}/verify", [amounts: amounts], opts)
+      Stripe.Customer.verify_bank_account("cus_DKdfmidqL", "bank_dWIKSdlwi", [19, 29])
+      |> Stripe.request!
+  """
+  @spec verify_bank_account(binary, binary, list()) :: Stripe.Request.t
+  def verify_bank_account(customer_id, bank_acct_id, amounts) do 
+    %Stripe.Request{
+      method: :post,
+      endpoint: "#{endpoint(customer_id)}/sources/#{bank_acct_id}/verify",
+      params: [amounts: amounts]
+    }
   end
 end

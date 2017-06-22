@@ -1,11 +1,20 @@
 defmodule Stripe.Balance do
-  use Stripe.API, [:list]
+  @moduledoc""" 
+  Functions related to get balance information
+  """
 
+  @behavior Stripe.API
+
+  @spec endpoint :: binary
   def endpoint do
     "balance"
   end
 
+  @spec retrieve() :: Stripe.Request.t
   def retrieve do
-    list
+    %Stripe.Request{
+      method: :get,
+      endpoint: endpoint()
+    }
   end
 end
