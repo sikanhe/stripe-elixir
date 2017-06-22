@@ -47,25 +47,26 @@ defmodule Stripe do
     "#{base_url}?#{query_params}"
   end
 
-  defp create_headers(opts) do
+  defp create_headers(request_opts) do
     headers = 
       [{"Authorization", "Bearer #{get_secret_key(opts)}"},
        {"User-Agent", "Stripe/v1 stripe-elixir/#{@client_version}"},
        {"Content-Type", "application/x-www-form-urlencoded"}]
 
-    case Keyword.get(opts, :stripe_account) do 
+    case Keyword.get(request_opts, :stripe_account) do 
       nil -> headers 
       account_id -> [{"Stripe-Account", account_id} | headers]
     end
   end
 
-  def request(%Stripe.Request{method: method, endpoint: endpoint, params: params}, opts \\ []) do
+  def request(%Stripe.Request{method: method, endpoint: endpoint, params: params}, request_opts \\ []) do
     HTTPoison.request(
       method, 
       request_url(endpoint, params), 
       <<>>, 
-      create_headers(opts)
+      create_headers(request_opts)
     )
+    |> handle_response()
   end
 
   def request!(%Stripe.Request{} = request_struct, opts \\ []) do 
