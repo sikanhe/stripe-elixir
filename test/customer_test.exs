@@ -28,6 +28,29 @@ defmodule Stripe.CustomerTest do
       = Customer.list
   end
 
+  test "list cards", %{customer: customer} do
+    {:ok, token} = Token.create(
+      card: [
+        number: "4242424242424242",
+        exp_month: 8,
+        exp_year: 2019,
+        cvc: "143"
+      ]
+    )
+
+    assert {:ok, %{"id" => _source_id, "object" => "card"}} =
+      Customer.create_card(customer["id"], token["id"])
+
+    customer_sources_url = "/v1/customers/#{customer["id"]}/sources"
+
+    assert {:ok, %{"data" => data,
+                   "object" => "list",
+                   "url" => ^customer_sources_url}} =
+      Customer.list_cards(customer["id"])
+
+    assert length(data) > 0
+  end
+
   test "add/update/delete a card to a customer", %{customer: customer} do
     {:ok, token} = Token.create(
       card: [
@@ -71,4 +94,29 @@ defmodule Stripe.CustomerTest do
     {:ok, %{"id" => source_id}} = Customer.create_source(customer["id"], source: token)
     {:ok, %{"status" => "verified"}} = Customer.verify_bank_account(customer["id"], source_id, [32, 45])
   end
+
+  test "list bank accounts", %{customer: customer} do
+    {:ok, %{"id" => token}} = Token.create(
+      bank_account: %{
+        account_number: "000123456789",
+        routing_number: "110000000",
+        country: "US",
+        currency: "usd",
+        account_holder_name: "Sikan He",
+        account_holder_type: "individual"
+      }
+    )
+
+    {:ok, %{"id" => _source_id}} = Customer.create_source(customer["id"], source: token)
+
+    customer_sources_url = "/v1/customers/#{customer["id"]}/sources"
+
+    assert {:ok, %{"data" => data,
+                   "object" => "list",
+                   "url" => ^customer_sources_url}} =
+      Customer.list_bank_accounts(customer["id"])
+
+    assert length(data) > 0
+  end
+
 end

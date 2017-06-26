@@ -34,13 +34,18 @@ defmodule Stripe.Customer do
   def create_card(customer_id, card_id, opts \\ []) do
     create_source(customer_id, [source: card_id], opts)
   end
- 
+
   def update_card(customer_id, card_id, updates) do
     update_source(customer_id, card_id, updates)
   end
 
   def delete_card(customer_id, card_id, opts \\ []) do
     delete_source(customer_id, [source: card_id], opts)
+  end
+
+  def list_cards(customer_id, pagination_opts \\ [], opts \\ []) do
+    pagination_opts = put_in(pagination_opts, [:object], "card")
+    Stripe.request(:get, "#{endpoint()}/#{customer_id}/sources", pagination_opts, opts)
   end
 
   # bank_account
@@ -55,6 +60,11 @@ defmodule Stripe.Customer do
 
   def delete_bank_account(customer_id, bank_acct_id, opts \\ []) do
     delete_source(customer_id, [source: bank_acct_id], opts)
+  end
+
+  def list_bank_accounts(customer_id, pagination_opts \\ [], opts \\ []) do
+    pagination_opts = put_in(pagination_opts, [:object], "bank_account")
+    Stripe.request(:get, "#{endpoint()}/#{customer_id}/sources", pagination_opts, opts)
   end
 
   def verify_bank_account(customer_id, bank_acct_id, amounts, opts \\ []) do
