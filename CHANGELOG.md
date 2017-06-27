@@ -1,3 +1,5 @@
+## 0.7.1
+- [Dependancy] Updated Poison dep to support 3.0
 ## 0.7.0 
 - [Enhancement] Added ability to verify signed Stripe Webhook payloads via `Stripe.Webhook.construct_event/4`. (Thank you @jayjun)
 - [Enhancement] Added ability to generate a Connect oauth url via `Stripe.Connect.authorize_url/1`.
