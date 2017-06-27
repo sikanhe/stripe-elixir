@@ -33,7 +33,7 @@ defmodule Stripe.Mixfile do
 
   defp deps do
     [{:httpoison, "~> 0.11"},
-     {:poison, "~> 2.2"},
+     {:poison, "~> 2.2 or ~> 3.0"},
 
      # Docs
      {:ex_doc, "~> 0.10", only: :dev},
