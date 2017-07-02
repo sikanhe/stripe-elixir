@@ -17,24 +17,22 @@ defmodule Stripe do
                 InvalidRequestError,
                 RateLimitError}
 
-  defmodule MissingSecretKeyError do
-    defexception message: """
-      The secret_key settings is required to use stripe. Please include your
-      strip api key in your application config file like so:
+  @missing_secret_key_error_message"""
+    The secret_key settings is required to use stripe. Please include your
+    stripe secret api key in your application config file like so:
 
-        config :stripe, secret_key: YOUR_SECRET_KEY
+      config :stripe, secret_key: YOUR_SECRET_KEY
 
-      Alternatively, you can also set the secret key as an environment variable:
+    Alternatively, you can also set the secret key as an environment variable:
 
-        STRIPE_SECRET_KEY=YOUR_SECRET_KEY
-    """
-  end
+      STRIPE_SECRET_KEY=YOUR_SECRET_KEY
+  """
 
   defp get_secret_key(opts) do
     Keyword.get(opts, :secret_key) ||
     System.get_env("STRIPE_SECRET_KEY") || 
     Application.get_env(:stripe, :secret_key) || 
-    raise MissingSecretKeyError
+    raise AuthenticationError, message: @missing_secret_key_error_message
   end
 
   defp request_url(endpoint, []) do

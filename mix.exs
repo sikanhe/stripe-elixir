@@ -1,9 +1,11 @@
 defmodule Stripe.Mixfile do
   use Mix.Project
 
+  @version "0.7.1"
+
   def project do
     [app: :stripe,
-     version: "0.6.0",
+     version: @version,
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -26,12 +28,12 @@ defmodule Stripe.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :httpoison]]
+    [extra_applications: [:logger]]
   end
 
   defp deps do
     [{:httpoison, "~> 0.11"},
-     {:poison, "~> 2.2"},
+     {:poison, "~> 2.2 or ~> 3.0"},
 
      # Docs
      {:ex_doc, "~> 0.10", only: :dev},
