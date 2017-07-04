@@ -2,7 +2,7 @@ defmodule Stripe.AccountTest do
   use ExUnit.Case
 
   test "create/update/retrieve/delete an account" do
-    assert {:ok, account} = Stripe.Account.create(managed: true)
+    assert {:ok, account} = Stripe.Account.create(type: "custom")
     assert {:ok, %{"email" => _email}} = Stripe.Account.retrieve(account["id"])
     assert {:ok, %{"metadata" => %{"test" => "data"}}} =
       Stripe.Account.update(account["id"], metadata: [test: "data"])
@@ -15,7 +15,7 @@ defmodule Stripe.AccountTest do
   end
 
   test "create/update/retrieve/delete/list an external_account" do
-    {:ok, account} = Stripe.Account.create(managed: true)
+    {:ok, account} = Stripe.Account.create(type: "custom")
 
     {:ok, token} = Stripe.Token.create(
       card: [
