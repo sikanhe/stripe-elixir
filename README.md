@@ -38,18 +38,19 @@ export STRIPE_SECRET_KEY=<YOUR_SECRET_KEY>
 
 This lib closely follows the official Ruby Client API.
 
-`Stripe.{RESOURCE}.create`
-`Stripe.{RESOURCE}.retrieve`
-`Stripe.{RESOURCE}.update`
-`Stripe.{RESOURCE}.list`
+* `Stripe.{RESOURCE}.create`
+* `Stripe.{RESOURCE}.retrieve`
+* `Stripe.{RESOURCE}.update`
+* `Stripe.{RESOURCE}.list`
 
-Returns {:ok, RESPONSE_BODY} when the request is successful.
+Returns `{:ok, RESPONSE_BODY}` when the request is successful.
 
-{:error, %ERROR_STRUCT{}} tuples are returned when there is a request/api error
+`{:error, %ERROR_STRUCT{}}` tuples are returned when there is a request/api error.  
 See all error types at https://stripe.com/docs/api/ruby#errors
 
 ## Some Basic Examples
-Create a customer
+
+Create a customer:
 
 ```elixir
 {:ok, %{"id" => "cus_asdfghjkl"} =
@@ -58,7 +59,6 @@ Create a customer
 
 Note that either KeywordLists or Maps with either String or Atom keys are acceptable for arguments and options. So all of the following would also work:
 
-
 ```elixir
 Stripe.Customer.create(%{email: "example@gmail.com"})
 Stripe.Customer.create(%{"email" => "example@gmail.com"})
@@ -66,17 +66,19 @@ Stripe.Customer.create([{"email", "example@gmail.com"}])
 ```
 
 Retrieve that customer:
+
 ```elixir   
 {:ok, customer} = Stripe.Customer.retrieve("cus_asdfghjkl")
 ```
 
 Update the customer:
+
 ```elixir
 {:ok, %{"metadata" => %{"somedata" => "somevalue"}}} =
   Stripe.Customer.update("cus_asdfghjkl", metadata: [somedata: "somevalue"])
 ```
 
-Delete the customer
+Delete the customer:
 
 ```elixir
 {:ok, %{"deleted" => true}} = Stripe.Customer.delete("cus_asdfghjkl")
