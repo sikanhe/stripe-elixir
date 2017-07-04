@@ -3,7 +3,7 @@ defmodule Stripe do
   Main module for handling sending/receiving requests to Stripe's API
   """
 
-  @api "https://api.stripe.com/v1/"
+  @default_api_endpoint "https://api.stripe.com/v1/"
   @client_version Mix.Project.config[:version]
 
   def version do
@@ -34,12 +34,18 @@ defmodule Stripe do
     raise AuthenticationError, message: @missing_secret_key_error_message
   end
 
+  defp get_api_endpoint do
+    System.get_env("STRIPE_API_ENDPOINT") || 
+    Application.get_env(:stripe, :api_endpoint) || 
+    @default_api_endpoint
+  end
+
   defp request_url(endpoint) do
-    Path.join(@api, endpoint)
+    Path.join(get_api_endpoint(), endpoint)
   end
 
   defp request_url(endpoint, []) do
-    Path.join(@api, endpoint)
+    Path.join(get_api_endpoint(), endpoint)
   end
 
   defp request_url(endpoint, data) do
