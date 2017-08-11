@@ -28,7 +28,8 @@ defmodule Stripe.Mixfile do
     ]
   end
 
-  defp elixirc_paths(env) when env in [:dev, :test, :prod], do: ["lib", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
 
   def application do
     [extra_applications: [:logger]]
