@@ -1,4 +1,4 @@
-defmodule Stripe.TokenHelpers do
+defmodule Stripe.Fixture.Token do
 
   def valid_card() do
     %{card: [

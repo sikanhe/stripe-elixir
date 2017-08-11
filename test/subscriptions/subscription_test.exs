@@ -1,6 +1,6 @@
 defmodule Stripe.SubscriptionTest do
   use ExUnit.Case, async: true
-  import Stripe.TokenHelpers
+  import Stripe.Fixture.Token
   alias Stripe.{Subscription, Plan, Customer, Token}
   alias Stripe.InvalidRequestError
 

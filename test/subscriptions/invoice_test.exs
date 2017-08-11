@@ -1,6 +1,6 @@
 defmodule Stripe.InvoiceTest do
   use ExUnit.Case, async: true
-  import Stripe.TokenHelpers
+  import Stripe.Fixture.Token
   alias Stripe.{Customer, Token, Invoice, InvoiceItem}
 
   setup_all do

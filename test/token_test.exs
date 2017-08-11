@@ -1,6 +1,6 @@
 defmodule Stripe.TokenTest do
   use ExUnit.Case, async: true
-  import Stripe.TokenHelpers
+  import Stripe.Fixture.Token
 
   alias Stripe.Token
   alias Stripe.{InvalidRequestError, CardError}
