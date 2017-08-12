@@ -1,7 +1,7 @@
 defmodule Stripe.CustomerTest do
   use ExUnit.Case, async: true
-  import Stripe.Fixture.Token
-
+  
+  alias Stripe.Fixture.Token, as: TokenFixture
   alias Stripe.{Customer, Token}
   alias Stripe.InvalidRequestError
 
@@ -30,7 +30,7 @@ defmodule Stripe.CustomerTest do
   end
 
   test "list cards", %{customer: customer} do
-    {:ok, token} = valid_card() |> Token.create()
+    {:ok, token} = TokenFixture.valid_card() |> Token.create()
 
     assert {:ok, %{"id" => _source_id, "object" => "card"}} =
       Customer.create_card(customer["id"], token["id"])
@@ -46,7 +46,7 @@ defmodule Stripe.CustomerTest do
   end
 
   test "add/update/delete a card to a customer", %{customer: customer} do
-    {:ok, token} = valid_card() |> Token.create()
+    {:ok, token} = TokenFixture.valid_card() |> Token.create()
 
     assert {:ok, %{"id" => source_id, "object" => "card"}} =
       Customer.create_card(customer["id"], token["id"])

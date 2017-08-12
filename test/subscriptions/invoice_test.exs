@@ -1,12 +1,12 @@
 defmodule Stripe.InvoiceTest do
   use ExUnit.Case, async: true
-  import Stripe.Fixture.Token
+  alias Stripe.Fixture.Token, as: TokenFixture
   alias Stripe.{Customer, Token, Invoice, InvoiceItem}
 
   setup_all do
     {:ok, customer} = Customer.create([])
 
-    {:ok, card} = valid_card() |> Token.create()
+    {:ok, card} = TokenFixture.valid_card() |> Token.create()
 
     Customer.create_card(customer["id"], card["id"])
 
