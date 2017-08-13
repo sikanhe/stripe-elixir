@@ -1,19 +1,14 @@
 defmodule Stripe.SubscriptionTest do
   use ExUnit.Case, async: true
+
+  alias Stripe.Fixture.Token, as: TokenFixture
   alias Stripe.{Subscription, Plan, Customer, Token}
   alias Stripe.InvalidRequestError
 
   setup do
     {:ok, customer} = Customer.create([])
 
-    {:ok, card} = Token.create(
-      card: [
-        number: "4242424242424242",
-        exp_month: 7,
-        exp_year: 2017,
-        cvc: "314"
-      ]
-    )
+    {:ok, card} = TokenFixture.valid_card() |> Token.create()
 
     Customer.create_card(customer["id"], card["id"])
 

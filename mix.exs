@@ -9,6 +9,7 @@ defmodule Stripe.Mixfile do
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     elixirc_paths: elixirc_paths(Mix.env),
      deps: deps(),
      package: package(),
      description: description()]
@@ -26,6 +27,9 @@ defmodule Stripe.Mixfile do
       links: %{"GitHub" => "https://github.com/sikanhe/stripe-elixir"}
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
 
   def application do
     [extra_applications: [:logger]]
