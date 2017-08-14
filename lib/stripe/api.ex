@@ -24,7 +24,7 @@ defmodule Stripe.API do
         @doc """
         Update a(n) #{__MODULE__ |> to_string |> String.split(".") |> List.last}
         """
-        def update(id, data, opts \\ []) do
+        def update(id, data, opts \\ []) when is_bitstring(id) do
           resource_url = Path.join(endpoint(), id)
           Stripe.request(:post, resource_url, data, opts)
         end
