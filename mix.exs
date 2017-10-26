@@ -6,7 +6,7 @@ defmodule Stripe.Mixfile do
   def project do
     [app: :stripe,
      version: @version,
-     elixir: "~> 1.4",
+     elixir: "~> 1.5",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      elixirc_paths: elixirc_paths(Mix.env),
@@ -36,12 +36,14 @@ defmodule Stripe.Mixfile do
   end
 
   defp deps do
-    [{:httpoison, "~> 0.11"},
-     {:poison, "~> 2.2 or ~> 3.0"},
+    [
+      {:httpoison, "~> 0.11"},
+      {:poison, "~> 2.2 or ~> 3.0"},
 
-     # Docs
-     {:ex_doc, "~> 0.10", only: :dev},
-     {:earmark, "~> 0.1", only: :dev},
-     {:inch_ex, ">= 0.0.0", only: :dev}]
+      # Docs
+      {:ex_doc, "~> 0.18.0", only: :dev},
+      {:earmark, "~> 1.2.0", only: :dev},
+      {:inch_ex, ">= 0.0.0", only: :dev}
+    ]
   end
 end
