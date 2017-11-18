@@ -1,3 +1,6 @@
+## 0.8.0
+- [Feature] Added support for SubscriptionItem 
+- [Deps] Added support for elixir 1.5 
 ## 0.7.1
 - [Dependancy] Updated Poison dep to support 3.0
 ## 0.7.0 
