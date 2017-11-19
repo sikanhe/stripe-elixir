@@ -5,7 +5,6 @@ defmodule Stripe.SubscriptionItemTest do
   alias Stripe.Fixture.Token, as: TokenFixture
 
   @addon_id "addon_plan"
-  @moduletag :addon
 
   setup do
     {:ok, customer} = Customer.create([])
@@ -15,9 +14,9 @@ defmodule Stripe.SubscriptionItemTest do
     Customer.create_card(customer["id"], card["id"])
 
     Plan.delete(@addon_id)
-    Plan.delete("sub_test_plan")
-    {:ok, plan} = Plan.create(name: "sub_test_plan",
-      id: "sub_test_plan",
+    Plan.delete("sub_item_test_plan")
+    {:ok, plan} = Plan.create(name: "sub_item_test_plan",
+      id: "sub_item_test_plan",
       amount: 999,
       currency: "usd",
       interval: "month")
